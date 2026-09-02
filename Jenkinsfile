@@ -1,15 +1,15 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Vaishnavi-devop/food-delivery-cicd.git'
-            }
-        }
+    environment {
+        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
+    }
 
+    stages {
         stage('Build') {
             steps {
+                sh 'java -version'
                 sh 'mvn clean package'
             }
         }
