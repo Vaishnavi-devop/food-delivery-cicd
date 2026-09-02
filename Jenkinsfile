@@ -35,3 +35,12 @@ pipeline {
         }
     }
 }
+stage('Deploy to EKS') {
+    steps {
+        sh 'aws eks update-kubeconfig --region us-east-1 --name food-delivery-cluster'
+        sh 'kubectl apply -f deployment.yaml'
+        sh 'kubectl apply -f service.yaml'
+        sh 'kubectl apply -f hpa.yaml'
+        sh 'kubectl rollout status deployment/food-delivery'
+    }
+}
